@@ -36,8 +36,13 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# example app
 app-example
 
 # generated native folders
 /ios
 /android
+
+# Vim/Swap files
+*.swp
+.firebase.ts.swp
