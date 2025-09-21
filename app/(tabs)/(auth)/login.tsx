@@ -18,7 +18,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, resetPassword } = useAuth(); // Added resetPassword
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? "light"];
 
@@ -36,6 +36,23 @@ export default function LoginScreen() {
       Alert.alert("Login Failed", error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      Alert.alert("Error", "Please enter your email to reset password");
+      return;
+    }
+
+    try {
+      await resetPassword(email);
+      Alert.alert(
+        "Check your email",
+        "A password reset link has been sent to your email."
+      );
+    } catch (error: any) {
+      Alert.alert("Error", error.message);
     }
   };
 
@@ -82,15 +99,27 @@ export default function LoginScreen() {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="white" />
+            <ActivityIndicator color="black" />
           ) : (
-            <ThemedText style={styles.buttonText}>Sign In</ThemedText>
+            <ThemedText style={[styles.buttonText, { color: "black" }]}>
+              Sign In
+            </ThemedText>
           )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={handleForgotPassword}
+          disabled={loading}
+          style={{ marginBottom: 16 }}
+        >
+          <ThemedText style={{ color: colors.tint, textAlign: "center" }}>
+            Forgot Password?
+          </ThemedText>
         </TouchableOpacity>
 
         <View style={styles.linkContainer}>
           <ThemedText style={styles.linkText}>
-            Dont have an account?{" "}
+            Don&apos;t have an account?{" "}
           </ThemedText>
           <Link href="/signup" style={[styles.link, { color: colors.tint }]}>
             <ThemedText style={[styles.link, { color: colors.tint }]}>

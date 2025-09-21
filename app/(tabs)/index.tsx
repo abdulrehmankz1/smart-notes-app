@@ -15,7 +15,7 @@ export default function HomeScreen() {
     try {
       await logout();
       Alert.alert("Success", "You have been logged out.");
-      router.replace("/(auth)/login");
+      router.replace("/(tabs)/(auth)/login");
     } catch (error: any) {
       Alert.alert("Error", error.message);
     }

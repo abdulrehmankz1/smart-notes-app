@@ -43,7 +43,13 @@ export default function SignupScreen() {
     setLoading(true);
     try {
       await signup(email, password, username);
-      router.replace("/(tabs)");
+
+      Alert.alert("Success", "Your account has been created successfully!", [
+        {
+          text: "Go to Login",
+          onPress: () => router.replace("/(tabs)/(auth)/login"),
+        },
+      ]);
     } catch (error: any) {
       Alert.alert("Signup Failed", error.message);
     } finally {
@@ -120,7 +126,7 @@ export default function SignupScreen() {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="white" />
+            <ActivityIndicator color="black" />
           ) : (
             <ThemedText style={styles.buttonText}>Sign Up</ThemedText>
           )}
@@ -131,7 +137,7 @@ export default function SignupScreen() {
             Already have an account?{" "}
           </ThemedText>
           <Link
-            href="/(auth)/login"
+            href="/(tabs)/(auth)/login"
             style={[styles.link, { color: colors.tint }]}
           >
             <ThemedText style={[styles.link, { color: colors.tint }]}>
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   buttonText: {
-    color: "white",
+    color: "black",
     fontSize: 16,
     fontWeight: "600",
   },
