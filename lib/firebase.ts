@@ -1,36 +1,21 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import {
-  getAuth,
-  initializeAuth,
-  getReactNativePersistence,
-  Auth,
-} from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAuth } from "firebase/auth";
 
-// Your Firebase config
+// Your Firebase config from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyCf9PGFmtvLMiZm9lThYGE98l1tLC3z9s0",
-  authDomain: "smart-notes-app-7a3c4.firebaseapp.com",
-  projectId: "smart-notes-app-7a3c4",
-  storageBucket: "smart-notes-app-7a3c4.appspot.com",
-  messagingSenderId: "76976571095",
-  appId: "1:76976571095:web:81fbe3fd7c9fb8fadba692",
-  measurementId: "G-4JLDD98FMB",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase app
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-// Initialize Auth once with AsyncStorage persistence
-let auth: Auth;
-try {
-  auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage),
-  });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-} catch (err) {
-  // If already initialized, fallback to getAuth
-  auth = getAuth(app);
-}
+// Initialize Auth
+const auth = getAuth(app);
 
 export { app, auth };

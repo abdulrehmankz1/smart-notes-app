@@ -46,3 +46,5 @@ app-example
 # Vim/Swap files
 *.swp
 .firebase.ts.swp
+lib/firebase.ts
+.env
